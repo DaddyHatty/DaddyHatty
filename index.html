@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: pink;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="questionContainer">
+        <h1>Will you be my Valentine?</h1>
+        <div class="buttons">
+            <button class="button" id="yesButton">Yes</button>
+            <button class="button" id="noButton">No</button>
+        </div>
+    </div>
+    <div class="container hidden" id="errorContainer">
+        <h1>Error</h1>
+        <button class="button" id="refreshButton">Refresh</button>
+    </div>
+    <script>
+        const questionContainer = document.getElementById('questionContainer');
+        const errorContainer = document.getElementById('errorContainer');
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const refreshButton = document.getElementById('refreshButton');
+        
+        let noClickCount = 0;
+        const maxNoClicks = 5;
+
+        yesButton.addEventListener('click', () => {
+            questionContainer.classList.add('hidden');
+            errorContainer.classList.remove('hidden');
+        });
+
+        noButton.addEventListener('click', () => {
+            noClickCount++;
+            if (noClickCount >= maxNoClicks) {
+                noButton.disabled = true;
+            } else {
+                noButton.style.transform = `scale(${1 + noClickCount * 0.1})`;
+            }
+        });
+
+        refreshButton.addEventListener('click', () => {
+            errorContainer.classList.add('hidden');
+            questionContainer.classList.remove('hidden');
+            noClickCount = 0;
+            noButton.style.transform = 'scale(1)';
+            noButton.disabled = false;
+        });
+    </script>
+</body>
+</html>
